@@ -52,7 +52,7 @@ Invoke-Command -ScriptBlock {
 
 # Node (js) in der Version 6.9.2 
 Invoke-Command -ScriptBlock { 
-    C:\ProgramData\chocolatey\choco.exe install -y nodejs.install --version 0.10.35
+    C:\ProgramData\chocolatey\choco.exe install -y nodejs.install --version 6.9.2
 } -ComputerName Dev01 -Credential $Credential
 
 Show-LabDeploymentSummary -Detailed
