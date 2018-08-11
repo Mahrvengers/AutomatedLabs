@@ -14,7 +14,7 @@ New-LabDefinition -Name $labName -DefaultVirtualizationEngine HyperV -VmPath C:\
 Add-LabVirtualNetworkDefinition -Name ($labName) -HyperVProperties @{SwitchType = 'External'; AdapterName = 'WLAN'}
 
 $chocolatey = Get-LabPostInstallationActivity -CustomRole ALChocolatey -Properties @{ }
-Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Network $labName -Memory 4GB -Processors 4 -PostInstallationActivity $chocolatey
+Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Network $labName -Memory 4GB -Processors 4 -PostInstallationActivity $chocolatey 
 
 Install-Lab 
 
