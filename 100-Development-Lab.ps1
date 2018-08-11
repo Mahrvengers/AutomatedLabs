@@ -18,8 +18,6 @@ Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Network 
 
 Install-Lab 
 
-#Install-LabSoftwarePackage -Path $labSources\SoftwarePackages\npp.7.5.8.Installer.x64.exe -CommandLine '/qn /IAgreeToTheEula' -ComputerName Dev01
-
 Invoke-LabCommand -ScriptBlock { 
     Set-ExecutionPolicy Bypass -Scope Process -Force; 
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
@@ -32,10 +30,27 @@ $Credential = New-Object -TypeName System.Management.Automation.PSCredential -Ar
 
 # Diverse Tools
 Invoke-Command -ScriptBlock { 
-    C:\ProgramData\chocolatey\choco.exe install -y git.install tortoisehg tortoisegit firefox googlechrome fiddler4 `
-      mssqlserver2014express mssqlservermanagementstudio2014express docker-for-windows `
-      visualstudiocode notepadplusplus.install phpstorm 7zip.install carbon `
-      php nunit
+    # Versionskontrollsysteme und Tools
+    C:\ProgramData\chocolatey\choco.exe install -y git.install tortoisehg tortoisegit 
+    # Webbrowser
+    C:\ProgramData\chocolatey\choco.exe install -y firefox googlechrome
+    # Web-Debugger 
+    C:\ProgramData\chocolatey\choco.exe install -y fiddler4 
+    # SQL Server 2014 und Management Studio, als Datenbank
+    C:\ProgramData\chocolatey\choco.exe install -y mssqlserver2014express mssqlservermanagementstudio2014express 
+    # docker für docker-Container-Nutzung in der Entwicklungsumgebung
+    C:\ProgramData\chocolatey\choco.exe install -y docker-for-windows
+    # Code-Editoren
+    C:\ProgramData\chocolatey\choco.exe install -y visualstudiocode notepadplusplus.install 
+    # Weitere kleine Tools
+    C:\ProgramData\chocolatey\choco.exe install -y 7zip.install carbon 
+    # PHP in einer aktuellen Version, PHP wird für ggf. Test-Webserver eingesetzt.
+    # Die Version ist dabei nicht so wichtig. 
+    C:\ProgramData\chocolatey\choco.exe install -y php
+    # IDE für PHP 
+    C:\ProgramData\chocolatey\choco.exe install -y phpstorm 
+    # Node (js) in der Version 6.9.2 
+    C:\ProgramData\chocolatey\choco.exe install -y nodejs.install --version 6.9.2
 } -ComputerName Dev01 -Credential $Credential
 
 # Visual Studio 2017
@@ -48,11 +63,6 @@ Invoke-Command -ScriptBlock {
 # Office 2016
 Invoke-Command -ScriptBlock { 
     C:\ProgramData\chocolatey\choco.exe install -y office365proplus
-} -ComputerName Dev01 -Credential $Credential
-
-# Node (js) in der Version 6.9.2 
-Invoke-Command -ScriptBlock { 
-    C:\ProgramData\chocolatey\choco.exe install -y nodejs.install --version 6.9.2
 } -ComputerName Dev01 -Credential $Credential
 
 Show-LabDeploymentSummary -Detailed
