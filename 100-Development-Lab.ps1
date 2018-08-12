@@ -61,7 +61,8 @@ Invoke-Command -ScriptBlock {
     C:\ProgramData\chocolatey\choco.exe install -y --params "/FTP /products:'SQL Search'".
     # KeePass Passwort-Manager
     C:\ProgramData\chocolatey\choco.exe install -y keepass
-    
+    # TeamCity Build Server
+    C:\ProgramData\chocolatey\choco.exe install -y teamcity
 } -ComputerName Dev01 -Credential $Credential
 
 # Visual Studio 2017
