@@ -51,6 +51,17 @@ Invoke-Command -ScriptBlock {
     C:\ProgramData\chocolatey\choco.exe install -y phpstorm 
     # Node (js) in der Version 6.9.2 
     C:\ProgramData\chocolatey\choco.exe install -y nodejs.install --version 6.9.2
+    # Installation der Microsoft Build Tools für Visual Studio
+    # Version für VS2017 : 15.0.26228.2
+    # Version für VS2015 : 14.0.25420.1
+    C:\ProgramData\chocolatey\choco.exe install -y microsoft-build-tools --version 15.0.26228.2
+    # TeamViewer
+    C:\ProgramData\chocolatey\choco.exe install -y teamviewer
+    # Redgate SQL Search
+    C:\ProgramData\chocolatey\choco.exe install -y --params "/FTP /products:'SQL Search'".
+    # KeePass Passwort-Manager
+    C:\ProgramData\chocolatey\choco.exe install -y keepass
+    
 } -ComputerName Dev01 -Credential $Credential
 
 # Visual Studio 2017
@@ -64,6 +75,18 @@ Invoke-Command -ScriptBlock {
 Invoke-Command -ScriptBlock { 
     C:\ProgramData\chocolatey\choco.exe install -y office365proplus
 } -ComputerName Dev01 -Credential $Credential
+
+# ACHTUNG : Hier fehlt vermutlich noch der MSBUILD-Pfad in der PATH Variable
+
+<# Als nächstes müssen wir noch ein paar Umgebungspfade setzen. #>
+Invoke-Command -ScriptBlock { 
+    $Path = (Get-ItemProperty -Path "Registry::HKLM\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH).Path
+    $Path = $Path + ’;’ + "C:\Projekte\Gemeinsame-Tools"
+    Set-ItemProperty -Path "Registry::HKLM\System\CurrentControlSet\Control\Session Manager\Environment" -Name PATH –Value $NewPath
+} -ComputerName Dev01 -Credential $Credential
+
+
+
 
 Show-LabDeploymentSummary -Detailed
 
