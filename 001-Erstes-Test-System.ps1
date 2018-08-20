@@ -14,7 +14,7 @@ Add-LabVirtualNetworkDefinition -Name $labName -HyperVProperties @{
 	SwitchType = 'External';
 	AdapterName = 'WLAN'}
 
-Add-LabMachineDefinition -Name DC01 -OperatingSystem 'Windows Server 2016 Standard (Desktop Experience)' -Network $labName -Memory 4GB -Processors 2
+Add-LabMachineDefinition -Name DC01 -OperatingSystem 'Windows Server 2016 Standard Evaluation (Desktop Experience)' -Network $labName -Memory 4GB -Processors 2
 
 Install-Lab
 
