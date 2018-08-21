@@ -29,3 +29,14 @@ Restart-LabVM -ComputerName Lab2016EX1 -Wait
 Install-Lab -PostInstallations
 
 Show-LabDeploymentSummary -Detailed
+
+<#
+    NAT aufsetzen für Internet-Zugriff
+
+    Setze den Standard-Gateway der VMs auf 192.168.11.254 für Internet-Zugriff.
+#>
+$ifIndex = (Get-NetAdapter -Name "vEthernet (LabEx2016)").ifIndex
+New-NetIPAddress -IPAddress 192.168.11.254 -PrefixLength 24 -InterfaceIndex $ifindex
+New-NetNat -Name LabEx2016 -InternalIPInterfaceAddressPrefix 192.168.11.0/24
+
+
