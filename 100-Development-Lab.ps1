@@ -11,12 +11,11 @@ $labName = "DevelopmentLab"
 
 New-LabDefinition -Name $labName -DefaultVirtualizationEngine HyperV -VmPath C:\AutomatedLab-VMs
 
-Add-LabVirtualNetworkDefinition -Name ($labName) -HyperVProperties @{SwitchType = 'External'; AdapterName = 'WLAN'}
-
-$chocolatey = Get-LabPostInstallationActivity -CustomRole ALChocolatey -Properties @{ }
-Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Network $labName -Memory 4GB -Processors 4 -PostInstallationActivity $chocolatey 
+Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Memory 16GB -Processors 8 
 
 Install-Lab 
+
+Connect-VMNetworkAdapter -SwitchName "Externes Netzwerk" -VMName Dev01
 
 Invoke-LabCommand -ScriptBlock { 
     Set-ExecutionPolicy Bypass -Scope Process -Force; 
