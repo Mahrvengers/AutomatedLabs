@@ -15,7 +15,7 @@ $PSDefaultParameterValues = @{
 
 $r = Get-LabPostInstallationActivity -CustomRole Exchange2016 -Properties @{ OrganizationName = 'Test1' }
 Add-LabMachineDefinition -Name Lab2016DC1 -Roles RootDC -Memory 1GB
-Add-LabMachineDefinition -Name Lab2016EX1 -Memory 8GB -PostInstallationActivity $r
+Add-LabMachineDefinition -Name Lab2016EX1 -Memory 11GB -PostInstallationActivity $r
 
 #Exchange 2016 required at least kb3206632. Hence before installing Exchange 2016, the update is applied
 #Alternativly, you can create an updated ISO as described in the introduction script '11 ISO Offline Patching.ps1' or download an updates image that
@@ -35,8 +35,9 @@ Show-LabDeploymentSummary -Detailed
 
     Setze den Standard-Gateway der VMs auf 192.168.11.254 für Internet-Zugriff.
 #>
+<#
 $ifIndex = (Get-NetAdapter -Name "vEthernet (LabEx2016)").ifIndex
 New-NetIPAddress -IPAddress 192.168.11.254 -PrefixLength 24 -InterfaceIndex $ifindex
 New-NetNat -Name LabEx2016 -InternalIPInterfaceAddressPrefix 192.168.11.0/24
-
+#>
 
