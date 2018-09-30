@@ -22,3 +22,16 @@ Nach einem riesigen Block, in dem es um die Erstellung von Linux-VMs geht, kommt
 ```
 
 Hierbei muss der Aufruf von New-VHD angepasst werden.
+
+```powershell
+    {
+        $referenceDiskPath = $Machine.OperatingSystem.BaseDiskPath
+        #$systemDisk = New-VHD -Path $path -Differencing -ParentPath $referenceDiskPath -ErrorAction Stop
+        #Write-Verbose "`tcreated differencing disk '$($systemDisk.Path)' pointing to '$ReferenceVhdxPath'"
+
+        Copy-Item $referenceDiskPath -Destination $path
+        $systemDisk = @{
+            'Path' = $path
+        }
+    }
+```
