@@ -28,8 +28,13 @@ Hierbei muss der Aufruf von New-VHD angepasst werden.
         $referenceDiskPath = $Machine.OperatingSystem.BaseDiskPath
         #$systemDisk = New-VHD -Path $path -Differencing -ParentPath $referenceDiskPath -ErrorAction Stop
         #Write-Verbose "`tcreated differencing disk '$($systemDisk.Path)' pointing to '$ReferenceVhdxPath'"
-
-        Copy-Item $referenceDiskPath -Destination $path
+        Write-Host "Kopiere $referenceDiskPath nach $path..."
+        # Pfad vorbereiten
+        $pfad = [System.IO.Path]::GetDirectoryName( $path )
+        # Sicherstellen, dass es den Pfad auch gibt
+        New-Item $pfad -ItemType Directory
+        # Kopieren des Base Images
+        Copy-Item $referenceDiskPath -Destination $path -Recurse -Force
         $systemDisk = @{
             'Path' = $path
         }
