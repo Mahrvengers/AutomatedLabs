@@ -7,7 +7,7 @@ Unabhängig davon ist es unfassbar einfach und schnell, mit docker etwas zum Exp
 Zum installieren benutze einfach chocolatey
 
 ```powershell
-choco install -y docker
+choco install -y docker docker-for-windows docker-compose
 ```
 
 Die Skripte zeigen unterschiedliche Möglichkeiten auf, was du dann so alles laden und starten kannst.
