@@ -1,6 +1,4 @@
-# Patches für Automated Lab
-
-## Ich will keine differenzierende Festplatte für die neuen VHDs, sondern eine jeweils vollständige!
+# Ich will keine differenzierende Festplatte für die neuen VHDs, sondern eine jeweils vollständige!
 
 Du suchst folgende Datei:
 

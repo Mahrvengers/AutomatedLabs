@@ -11,7 +11,7 @@ $labName = "DevelopmentLab"
 
 New-LabDefinition -Name $labName -DefaultVirtualizationEngine HyperV -VmPath C:\AutomatedLab-VMs
 
-Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Memory 16GB -Processors 8 
+Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Memory 8GB -Processors 8 
 
 Install-Lab 
 

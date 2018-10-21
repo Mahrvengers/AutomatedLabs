@@ -1,9 +1,15 @@
-﻿#The is almost the same like '05 SQL Server and client, domain joined.ps1' but installs an Exchange 2016 server instead
-#of a SQL Server.
-#
-# IMPORTANT NOTE: Make sure you have installed at least the CU KB3206632 before installing Exchange 2016, this is a requirement.
-# Refer to the introduction script '11 ISO Offline Patching.ps1' for creating a new ISO that contains patches or install
-# it it with Install-LabSoftwarePackage like below.
+﻿<#
+
+    Installation von Exchange 2016, so dass es auf einen Laptop mit 16GB RAM passt.
+    Zusätzlich wird "internal networking" verwendet, d.h. die VMs haben zunächst keinen Internet-
+    Zugriff und sehen sich nur gegenseitig. 
+    Dann wird unten beschrieben, wie man in dieses interne Netz ein NAT vom Host aus einhängt. 
+    Damit ist die Spieldomäne dann vom Umgebungsnetz getrennt, kann also von außen nicht gesehen werden 
+    und auch nicht aus versehen was andersherum kaputt machen.
+
+    Skript von SQL Server Junge
+
+#>
 
 New-LabDefinition -Name 'LabEx2016' -DefaultVirtualizationEngine HyperV
 

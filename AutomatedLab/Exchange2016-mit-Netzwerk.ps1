@@ -1,3 +1,11 @@
+<#
+
+    Exchange Server 2016 mit Netzwerk sowie eigenem Admin-PW.
+
+    Skript von Iron-Cloud
+
+#>
+
 $labName = 'EX2016'
 
 New-LabDefinition -Name $labName -DefaultVirtualizationEngine HyperV
