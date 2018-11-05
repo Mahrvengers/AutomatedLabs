@@ -9,23 +9,39 @@
 
 $labName = "DevelopmentLab"
 
+<#
+    Wenn die VM bereits existiert, dann räumen wir sie weg.
+#>
+if ( (Get-VM -Name Dev01 -ErrorAction SilentlyContinue) -ne $null ) {
+    Import-Lab $labName
+    Remove-Lab
+}
+
+<#
+    VM neu angelegen
+#>
+
 New-LabDefinition -Name $labName -DefaultVirtualizationEngine HyperV -VmPath C:\AutomatedLab-VMs
 
-Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' -Memory 8GB -Processors 8 
+Add-LabVirtualNetworkDefinition -Name $labName -AddressSpace 192.168.178.0/24  -HyperVProperties @{ SwitchType = 'External'; AdapterName = 'Ethernet' } 
+
+Add-LabMachineDefinition -Name Dev01 -OperatingSystem 'Windows 10 Pro' `
+    -Memory 8GB -Processors 4 -Network $labName `
+    -IpAddress 192.168.178.160 -Gateway 192.168.178.1 `
+    -DnsServer1 192.168.178.1
 
 Install-Lab 
-
-Connect-VMNetworkAdapter -SwitchName "Externes Netzwerk" -VMName Dev01
-
-Invoke-LabCommand -ScriptBlock { 
-    Set-ExecutionPolicy Bypass -Scope Process -Force; 
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-} -ComputerName (Get-LabVM)
 
 Write-Host "Installiere Software..." -ForegroundColor Yellow
 
 $PWord = ConvertTo-SecureString -String "Somepass1" -AsPlainText -Force
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "Administrator", $PWord
+
+
+Invoke-Command -ScriptBlock { 
+    Set-ExecutionPolicy Bypass -Scope Process -Force; 
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+} -ComputerName Dev01 -Credential $Credential
 
 # Diverse Tools
 Invoke-Command -ScriptBlock { 
@@ -86,13 +102,6 @@ Invoke-Command -ScriptBlock {
 } -ComputerName Dev01 -Credential $Credential
 
 
-
-
 Show-LabDeploymentSummary -Detailed
 
-Write-Host "Fertig!" -ForegroundColor Green
-
-Read-Host -Prompt "Drücken Sie eine Taste, um die VM wieder zu zerstören."
-
-Remove-Lab
 

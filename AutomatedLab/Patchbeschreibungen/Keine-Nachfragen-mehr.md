@@ -1,17 +1,17 @@
 # Keine Nachfragen mehr
 
-Während der automatisierten Abläufe bei der Installation gibt es leider ein paar unnütze 
+Wï¿½hrend der automatisierten Ablï¿½ufe bei der Installation gibt es leider ein paar unnï¿½tze 
 Nachfragen. 
 
 Wie schaltet man diese ab?
 
-Die Nachfragen werden durch das Commandlet Enable-LabHostRemoting ausgelöst. 
-Leider haben sie nichts mit dem klassischen $Confirm zu tun, dann hätte man 
-das Verhalten einfach global steuern können. 
+Die Nachfragen werden durch das Commandlet Enable-LabHostRemoting ausgelï¿½st. 
+Leider haben sie nichts mit dem klassischen $Confirm zu tun, dann hï¿½tte man 
+das Verhalten einfach global steuern kï¿½nnen. 
 
-Das Commandlet verfügt aber über einen -Force Parameter, der die Nachfrage 
-unterdrückt und einfach Yes annimmt. Nur das der nicht gesetzt ist, und bei 
-dem aufrufenden Commandlet gibts auch kein Flag, das man dahin durchreichen könnte. 
+Das Commandlet verfï¿½gt aber ï¿½ber einen -Force Parameter, der die Nachfrage 
+unterdrï¿½ckt und einfach Yes annimmt. Nur das der nicht gesetzt ist, und bei 
+dem aufrufenden Commandlet gibts auch kein Flag, das man dahin durchreichen kï¿½nnte. 
 
 Also patchen wir das Modul:
 
@@ -25,7 +25,7 @@ $pfad = Get-Module "AutomatedLab" | Select-Object -ExpandProperty Path
 # Gehen hin:
 ise $pfad
 
-# Die Ise öffnet gleich die Datei. In Zeile 411 können wir dann -Force anhängen
+# Die Ise ï¿½ffnet gleich die Datei. In Zeile 416 kï¿½nnen wir dann -Force anhï¿½ngen
 
         if (-not (Test-LabHostRemoting))
         {
@@ -34,9 +34,9 @@ ise $pfad
 
 ```
 
-Und schon läuft das vollständige Setup ohne die Nachfrage.
+Und schon lï¿½uft das vollstï¿½ndige Setup ohne die Nachfrage.
 
-*Achtung:* Um die Datei speichern zu können muss der Editor mit 
+*Achtung:* Um die Datei speichern zu kï¿½nnen muss der Editor mit 
 Admin-Rechten laufen. Weil das Modul ja im Windows Ordner abgelegt ist.
 
 Tadaaa. Keine Nachfragen mehr.
